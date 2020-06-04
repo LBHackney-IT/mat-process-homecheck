@@ -49,8 +49,7 @@ jobs:
 
       - run:
           name: Run tests in Chrome
-          command: 
-            TEST_BROWSER=chrome npm test
+          command: TEST_BROWSER=chrome npm test
           no_output_timeout: 20m
 
   build:
@@ -59,7 +58,7 @@ jobs:
         type: string
       worktray-url:
         type: string
-      tenancy-url:	
+      tenancy-url:
         type: string
       diversity-form-url:
         type: string
@@ -80,10 +79,10 @@ jobs:
               --build-arg ENVIRONMENT_NAME="<<parameters.environment-name>>" \
               --build-arg PROCESS_NAME="hc" \
               --build-arg WORKTRAY_URL="<<parameters.worktray-url>>" \
+              --build-arg TENANCY_URL="<<parameters.tenancy-url>>" \
               --build-arg DIVERSITY_FORM_URL="<<parameters.diversity-form-url>>" \
               --build-arg FEEDBACK_FORM_URL="<<parameters.feedback-form-url>>" \
               .
-
   deploy:
     parameters:
       cluster-name:
@@ -145,7 +144,6 @@ workflows:
             --build-arg TENANCY_URL="https://hlbctrial-dev.outsystemsenterprise.com/manageatenancy/CustomerDashboard.aspx" \
             --build-arg DIVERSITY_FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLScDI85GMCFl8c02DYGpf_cOxsjD83FNbNFEIWKs4u_HOydhKA/viewform" \
             --build-arg FEEDBACK_FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform" \
-
           region: AWS_REGION
           repo: $AWS_ECR_PATH_DEV
           tag: $CIRCLE_SHA1
@@ -172,7 +170,6 @@ workflows:
             --build-arg TENANCY_URL="https://hlbctrial-tst.outsystemsenterprise.com/manageatenancy/CustomerDashboard.aspx" \
             --build-arg DIVERSITY_FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLScDI85GMCFl8c02DYGpf_cOxsjD83FNbNFEIWKs4u_HOydhKA/viewform" \
             --build-arg FEEDBACK_FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform" \
-
           region: AWS_REGION
           repo: $AWS_ECR_PATH_STAGING
           tag: $CIRCLE_SHA1
@@ -207,7 +204,6 @@ workflows:
             --build-arg TENANCY_URL="https://hlbctrial.outsystemsenterprise.com/manageatenancy/CustomerDashboard.aspx" \
             --build-arg DIVERSITY_FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLScDI85GMCFl8c02DYGpf_cOxsjD83FNbNFEIWKs4u_HOydhKA/viewform" \
             --build-arg FEEDBACK_FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform" \
-
           region: AWS_REGION
           repo: $AWS_ECR_PATH_PRODUCTION
           tag: $CIRCLE_SHA1
