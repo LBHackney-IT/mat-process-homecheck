@@ -127,7 +127,7 @@ it("renders correctly", () => {
               <p
                 className="lbh-body"
               >
-                The Home Check has been submitted for manager review.
+                The hc has been submitted for manager review.
               </p>
             </div>
           </section>

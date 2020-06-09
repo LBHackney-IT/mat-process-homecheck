@@ -263,7 +263,7 @@ it("renders correctly when online", async () => {
             <h1
               className="lbh-heading-h1"
             >
-              Home Check
+              hc
             </h1>
           </div>
           <h2
@@ -483,7 +483,7 @@ it("renders correctly when offline", async () => {
             <h1
               className="lbh-heading-h1"
             >
-              Home Check
+              hc
             </h1>
           </div>
           <span
