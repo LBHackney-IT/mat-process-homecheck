@@ -1,5 +1,5 @@
 import { NextRouter } from "next/router";
-import prefixUrl from "../helpers/prefixUrl";
+// import prefixUrl from "../helpers/prefixUrl";
 
 enum PageSlugs {
   // General
