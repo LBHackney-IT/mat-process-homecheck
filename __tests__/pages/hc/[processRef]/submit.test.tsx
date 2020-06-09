@@ -1,7 +1,7 @@
 import isOnline from "is-online";
 import React from "react";
 import { act, create, ReactTestRenderer } from "react-test-renderer";
-import SubmitPage from "../../../../pages/TODO/[processRef]/submit";
+import SubmitPage from "../../../../pages/hc/[processRef]/submit";
 import { promiseToWaitForNextTick } from "../../../helpers/promiseToWaitForNextTick";
 
 jest.mock("is-online");

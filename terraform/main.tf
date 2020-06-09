@@ -35,7 +35,7 @@ module "production" {
   lb_iam_role_arn             = data.aws_iam_role.ec2_container_service_role.arn
   path_pattern                = "/hc*"
   task_definition_environment_variables = {
-  PROCESS_TYPE_VALUE='100000156'
+  PROCESS_TYPE_VALUE='100000052'
   PROCESS_TYPE_NAME='Home check'"
 
     PROCESS_API_HOST     = "4cgb2c6pqe.execute-api.eu-west-2.amazonaws.com"
@@ -134,7 +134,7 @@ module "development" {
   lb_iam_role_arn             = data.aws_iam_role.ec2_container_service_role.arn
   path_pattern                = "/hc*"
   task_definition_environment_variables = {
-  PROCESS_TYPE_VALUE='100000156'
+  PROCESS_TYPE_VALUE='100000052'
   PROCESS_TYPE_NAME='Home check'
 
     PROCESS_API_HOST     = "n74li4pi4k.execute-api.eu-west-2.amazonaws.com"
