@@ -1,6 +1,6 @@
 import React from "react";
 import { create } from "react-test-renderer";
-import ConfirmedPage from "../../../../pages/TODO/[processRef]/confirmed";
+import ConfirmedPage from "../../../../pages/hc/[processRef]/confirmed";
 
 it("renders correctly", () => {
   const component = create(<ConfirmedPage />);
