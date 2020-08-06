@@ -63,7 +63,7 @@ We use:
 ### Changing the server code
 
 Hot reloading isn't set up for the local server, so you will need to restart it
-to see any changes to files in `server/`.
+to see any changes.
 
 ### Using service workers
 
@@ -127,10 +127,23 @@ npm run test:feature:update
 To run the full test suite:
 
 ```bash
+npm run test:all
+```
+
+To run the full test suite, updating changed snapshots:
+
+```bash
+npm run test:all:update
+```
+
+To run the full test suite, including format checking and linting:
+
+```bash
 npm test
 ```
 
-To run the full test suite, fixing any issues and updating snapshots:
+To run the full test suite, including format checking and linting, fixing any
+issues and updating snapshots:
 
 ```bash
 npm run test:update

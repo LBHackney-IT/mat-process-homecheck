@@ -2,8 +2,8 @@ import isOnline from "is-online";
 import * as router from "next/router";
 import React from "react";
 import { act, create, ReactTestRenderer } from "react-test-renderer";
-import IndexPage from "../../../pages/hc/index";
-import { promiseToWaitForNextTick } from "../../helpers/promiseToWaitForNextTick";
+import IndexPage from "../../../pages/thc/index";
+import { promiseToWaitForNextTick } from "../../helpers/promise";
 
 jest.mock("is-online");
 
@@ -35,8 +35,8 @@ it("redirects to the loading page when online", async () => {
 
   expect(routerReplaceMock).toHaveBeenCalledTimes(1);
   expect(routerReplaceMock).toHaveBeenCalledWith(
-    { pathname: "/hc/[processRef]/loading" },
-    { pathname: "/hc/test-process-ref/loading" }
+    { pathname: "/thc/[processRef]/loading" },
+    { pathname: "/thc/test-process-ref/loading" }
   );
 });
 
@@ -152,7 +152,7 @@ it("renders correctly when offline", async () => {
                 feedback
               </a>
                
-              will help us to improve it.
+              (online only, opens in a new tab) will help us to improve it.
             </p>
             <hr />
           </div>
@@ -162,7 +162,7 @@ it("renders correctly when offline", async () => {
             <h1
               className="lbh-heading-h1"
             >
-              Home Check
+              Tenancy and Household Check
             </h1>
           </div>
           <p

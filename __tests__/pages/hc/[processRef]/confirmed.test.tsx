@@ -1,6 +1,6 @@
 import React from "react";
 import { create } from "react-test-renderer";
-import ConfirmedPage from "../../../../pages/hc/[processRef]/confirmed";
+import ConfirmedPage from "../../../../pages/thc/[processRef]/confirmed";
 
 it("renders correctly", () => {
   const component = create(<ConfirmedPage />);
@@ -106,7 +106,7 @@ it("renders correctly", () => {
                 feedback
               </a>
                
-              will help us to improve it.
+              (online only, opens in a new tab) will help us to improve it.
             </p>
             <hr />
           </div>
@@ -127,7 +127,7 @@ it("renders correctly", () => {
               <p
                 className="lbh-body"
               >
-                The hc has been submitted for manager review.
+                The Tenancy and Household Check has been submitted for manager review.
               </p>
             </div>
           </section>
@@ -147,6 +147,8 @@ it("renders correctly", () => {
             >
               Go to diversity monitoring form
             </button>
+            <br />
+            (online only, opens in a new tab)
           </p>
           <p
             className="lbh-body"
