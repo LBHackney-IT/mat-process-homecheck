@@ -1,6 +1,6 @@
 {
-  "name": "Manage a Tenancy - Home Check",
-  "short_name": "MaT - HC",
+  "name": "Manage a Tenancy - Tenancy and Household Check",
+  "short_name": "MaT - THC",
   "dir": "ltr",
   "lang": "en-GB",
   "display": "browser",

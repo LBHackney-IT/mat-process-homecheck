@@ -1,8 +1,8 @@
 import isOnline from "is-online";
 import React from "react";
 import { act, create, ReactTestRenderer } from "react-test-renderer";
-import SubmitPage from "../../../../pages/hc/[processRef]/submit";
-import { promiseToWaitForNextTick } from "../../../helpers/promiseToWaitForNextTick";
+import SubmitPage from "../../../../pages/thc/[processRef]/submit";
+import { promiseToWaitForNextTick } from "../../../helpers/promise";
 
 jest.mock("is-online");
 
@@ -123,7 +123,7 @@ it("renders correctly when online", async () => {
                 feedback
               </a>
                
-              will help us to improve it.
+              (online only, opens in a new tab) will help us to improve it.
             </p>
             <hr />
           </div>
@@ -149,11 +149,10 @@ it("renders correctly when online", async () => {
               <p
                 className="lbh-body"
               >
-                The 
-                hc
-                 has been saved to your device ready to be sent
-                 
-                to your manager for review.
+                The Tenancy and Household Check for the tenancy at 
+                , occupied by 
+                
+                , has been saved to your device ready to be sent to your manager for review.
               </p>
               <p
                 className="lbh-body"
@@ -170,12 +169,7 @@ it("renders correctly when online", async () => {
                 <strong>
                   on this device
                 </strong>
-                , please come back to this
-                 
-                hc
-                 from your work tray and click on the ‘Save and submit
-                 to manager
-                ’ button below that will become able to be clicked.
+                , please come back to this Tenancy and Household Check from your work tray and click on the ‘Save and submit to manager’ button below that will become able to be clicked.
               </p>
               <p
                 className="lbh-body"
@@ -183,10 +177,7 @@ it("renders correctly when online", async () => {
                 <strong>
                   You are online
                 </strong>
-                , and can submit this 
-                hc
-                 
-                to your manager now.
+                , and can submit this Tenancy and Household Check to your manager now.
               </p>
             </div>
           </section>
@@ -341,7 +332,7 @@ it("renders correctly when offline", async () => {
                 feedback
               </a>
                
-              will help us to improve it.
+              (online only, opens in a new tab) will help us to improve it.
             </p>
             <hr />
           </div>
@@ -367,11 +358,10 @@ it("renders correctly when offline", async () => {
               <p
                 className="lbh-body"
               >
-                The 
-                hc
-                 has been saved to your device ready to be sent
-                 
-                to your manager for review.
+                The Tenancy and Household Check for the tenancy at 
+                , occupied by 
+                
+                , has been saved to your device ready to be sent to your manager for review.
               </p>
               <p
                 className="lbh-body"
@@ -388,12 +378,7 @@ it("renders correctly when offline", async () => {
                 <strong>
                   on this device
                 </strong>
-                , please come back to this
-                 
-                hc
-                 from your work tray and click on the ‘Save and submit
-                 to manager
-                ’ button below that will become able to be clicked.
+                , please come back to this Tenancy and Household Check from your work tray and click on the ‘Save and submit to manager’ button below that will become able to be clicked.
               </p>
             </div>
           </section>

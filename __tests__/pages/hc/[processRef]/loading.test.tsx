@@ -1,30 +1,25 @@
 import * as router from "next/router";
 import React from "react";
 import { act, create, ReactTestRenderer } from "react-test-renderer";
-import basePath from "../../../../config/basePath";
-import LoadingPage from "../../../../pages/hc/[processRef]/loading";
-import { databaseSchemaVersion } from "../../../../storage/databaseSchemaVersion";
+import LoadingPage from "../../../../pages/thc/[processRef]/loading";
+import databaseSchemaVersion from "../../../../storage/databaseSchemaVersion";
 import { processStoreNames } from "../../../../storage/ProcessDatabaseSchema";
-import { Storage } from "../../../../storage/Storage";
-import { promiseToWaitForNextTick } from "../../../helpers/promiseToWaitForNextTick";
-import { spyOnConsoleError } from "../../../helpers/spyOnConsoleError";
+import Storage from "../../../../storage/Storage";
+import { promiseToWaitForNextTick } from "../../../helpers/promise";
+import { spyOnConsoleError } from "../../../helpers/spies";
 
 const originalExternalContext = Storage.ExternalContext;
 const originalProcessContext = Storage.ProcessContext;
+const originalResidentContext = Storage.ResidentContext;
 
 beforeEach(() => {
+  sessionStorage.setItem("currentProcessRef", "test-process-ref");
   sessionStorage.setItem(
-    `${basePath}/test-process-ref:processApiJwt`,
+    "test-process-ref:processApiJwt",
     "test-process-api-jwt"
   );
-  sessionStorage.setItem(
-    `${basePath}/test-process-ref:matApiJwt`,
-    "test-mat-api-jwt"
-  );
-  sessionStorage.setItem(
-    `${basePath}/test-process-ref:matApiData`,
-    "test-mat-api-data"
-  );
+  sessionStorage.setItem("test-process-ref:matApiJwt", "test-mat-api-jwt");
+  sessionStorage.setItem("test-process-ref:matApiData", "test-mat-api-data");
 
   Storage.ExternalContext = {
     ...jest.fn()(),
@@ -59,6 +54,13 @@ beforeEach(() => {
       },
     },
   };
+  Storage.ResidentContext = {
+    ...jest.fn()(),
+    database: {
+      ...jest.fn()(),
+      db: { version: databaseSchemaVersion },
+    },
+  };
 
   jest.spyOn(router, "useRouter").mockImplementation(() => ({
     ...jest.fn()(),
@@ -71,6 +73,7 @@ afterEach(() => {
 
   Storage.ExternalContext = originalExternalContext;
   Storage.ProcessContext = originalProcessContext;
+  Storage.ResidentContext = originalResidentContext;
 });
 
 it("renders correctly when online", async () => {
@@ -253,7 +256,7 @@ it("renders correctly when online", async () => {
                 feedback
               </a>
                
-              will help us to improve it.
+              (online only, opens in a new tab) will help us to improve it.
             </p>
             <hr />
           </div>
@@ -263,9 +266,78 @@ it("renders correctly when online", async () => {
             <h1
               className="lbh-heading-h1"
             >
-              hc
+              Tenancy and Household Check
             </h1>
           </div>
+          <dl
+            className="govuk-summary-list lbh-summary-list govuk-summary-list--no-border mat-tenancy-summary"
+          >
+            <div
+              className="govuk-summary-list__row lbh-summary-list__row"
+            >
+              <dt
+                className="govuk-summary-list__key lbh-summary-list__key"
+              >
+                Address
+              </dt>
+              <dd
+                className="govuk-summary-list__value lbh-summary-list__value"
+              >
+                Flat 1, 1 Test Street, Test Town, TT1 1TT
+              </dd>
+            </div>
+            <div
+              className="govuk-summary-list__row lbh-summary-list__row"
+            >
+              <dt
+                className="govuk-summary-list__key lbh-summary-list__key"
+              >
+                Tenants
+              </dt>
+              <dd
+                className="govuk-summary-list__value lbh-summary-list__value"
+              >
+                TestTenant1, TestTenant2
+              </dd>
+            </div>
+            <div
+              className="govuk-summary-list__row lbh-summary-list__row"
+            >
+              <dt
+                className="govuk-summary-list__key lbh-summary-list__key"
+              >
+                Tenure type
+              </dt>
+              <dd
+                className="govuk-summary-list__value lbh-summary-list__value"
+              >
+                Secure
+              </dd>
+            </div>
+            <div
+              className="govuk-summary-list__row lbh-summary-list__row"
+            >
+              <dt
+                className="govuk-summary-list__key lbh-summary-list__key"
+              >
+                Tenancy start date
+              </dt>
+              <dd
+                className="govuk-summary-list__value lbh-summary-list__value"
+              >
+                1 January 2019
+              </dd>
+            </div>
+          </dl>
+          <style
+            jsx={true}
+          >
+            
+            :global(.mat-tenancy-summary dt, .mat-tenancy-summary dd) {
+              padding-bottom: 0 !important;
+            }
+          
+          </style>
           <h2
             className="lbh-heading-h2"
           >
@@ -274,17 +346,14 @@ it("renders correctly when online", async () => {
           <p
             className="lbh-body"
           >
-            The system is fetching the information you need for this process.
+            The system is updating the information you need for this process so that you can go offline at any point.
           </p>
           <label
-            className="jsx-1951065838 govuk-label lbh-label"
+            className="govuk-label lbh-label"
           >
             Ready (updated)
-            <div
-              className="jsx-1951065838"
-            >
+            <div>
               <div
-                className="jsx-1951065838"
                 style={
                   Object {
                     "width": "100%",
@@ -292,6 +361,22 @@ it("renders correctly when online", async () => {
                 }
               />
             </div>
+            <style
+              jsx={true}
+            >
+              
+            div {
+              width: 100%;
+              height: 1em;
+              background-color: #7fb2a7;
+            }
+
+            div &gt; div {
+              width: 0;
+              background-color: #00664f;
+            }
+          
+            </style>
           </label>
           <button
             aria-disabled={false}
@@ -347,25 +432,58 @@ it("renders correctly when offline", async () => {
   expect(consoleErrorSpy.mock.calls).toMatchInlineSnapshot(`
     Array [
       Array [
-        [Error: Request timed out],
+        [Error: Fetch failed for undefined: /thc/api/v1/processes/test-process-ref/processData?jwt=test-process-api-jwt],
       ],
       Array [
-        [Error: Request timed out],
+        [Error: Fetch failed for undefined: /thc/api/v1/processes/test-process-ref/processData?jwt=test-process-api-jwt],
       ],
       Array [
-        [Error: Request timed out],
+        [Error: Fetch failed for undefined: /thc/api/v1/processes/test-process-ref/processData?jwt=test-process-api-jwt],
       ],
       Array [
-        [Error: Request timed out],
+        [Error: Fetch failed for undefined: /thc/api/v1/processes/test-process-ref/processData?jwt=test-process-api-jwt],
       ],
       Array [
-        [Error: Request timed out],
+        [Error: Fetch failed for undefined: /thc/api/v1/processes/test-process-ref/processData?jwt=test-process-api-jwt],
       ],
       Array [
-        [Error: Request timed out],
+        [Error: Fetch failed for undefined: /thc/api/v1/processes/test-process-ref/processData?jwt=test-process-api-jwt],
       ],
       Array [
-        [Error: Request timed out],
+        [Error: Fetch failed for undefined: /thc/api/v1/residents?data=test-mat-api-data&jwt=test-mat-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/processes/test-process-ref/processData?jwt=test-process-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/residents?data=test-mat-api-data&jwt=test-mat-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/tenancies?data=test-mat-api-data&jwt=test-mat-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/processes/test-process-ref/processData?jwt=test-process-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/residents?data=test-mat-api-data&jwt=test-mat-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/tenancies?data=test-mat-api-data&jwt=test-mat-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/officer?data=test-mat-api-data&jwt=test-mat-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/processes/test-process-ref/processData?jwt=test-process-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/residents?data=test-mat-api-data&jwt=test-mat-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/tenancies?data=test-mat-api-data&jwt=test-mat-api-jwt],
+      ],
+      Array [
+        [Error: Fetch failed for undefined: /thc/api/v1/officer?data=test-mat-api-data&jwt=test-mat-api-jwt],
       ],
     ]
   `);
@@ -473,7 +591,7 @@ it("renders correctly when offline", async () => {
                 feedback
               </a>
                
-              will help us to improve it.
+              (online only, opens in a new tab) will help us to improve it.
             </p>
             <hr />
           </div>
@@ -483,9 +601,78 @@ it("renders correctly when offline", async () => {
             <h1
               className="lbh-heading-h1"
             >
-              hc
+              Tenancy and Household Check
             </h1>
           </div>
+          <dl
+            className="govuk-summary-list lbh-summary-list govuk-summary-list--no-border mat-tenancy-summary"
+          >
+            <div
+              className="govuk-summary-list__row lbh-summary-list__row"
+            >
+              <dt
+                className="govuk-summary-list__key lbh-summary-list__key"
+              >
+                Address
+              </dt>
+              <dd
+                className="govuk-summary-list__value lbh-summary-list__value"
+              >
+                Error
+              </dd>
+            </div>
+            <div
+              className="govuk-summary-list__row lbh-summary-list__row"
+            >
+              <dt
+                className="govuk-summary-list__key lbh-summary-list__key"
+              >
+                Tenants
+              </dt>
+              <dd
+                className="govuk-summary-list__value lbh-summary-list__value"
+              >
+                Error
+              </dd>
+            </div>
+            <div
+              className="govuk-summary-list__row lbh-summary-list__row"
+            >
+              <dt
+                className="govuk-summary-list__key lbh-summary-list__key"
+              >
+                Tenure type
+              </dt>
+              <dd
+                className="govuk-summary-list__value lbh-summary-list__value"
+              >
+                Error
+              </dd>
+            </div>
+            <div
+              className="govuk-summary-list__row lbh-summary-list__row"
+            >
+              <dt
+                className="govuk-summary-list__key lbh-summary-list__key"
+              >
+                Tenancy start date
+              </dt>
+              <dd
+                className="govuk-summary-list__value lbh-summary-list__value"
+              >
+                Error
+              </dd>
+            </div>
+          </dl>
+          <style
+            jsx={true}
+          >
+            
+            :global(.mat-tenancy-summary dt, .mat-tenancy-summary dd) {
+              padding-bottom: 0 !important;
+            }
+          
+          </style>
           <span
             className="govuk-error-message lbh-error-message"
           >
@@ -505,24 +692,37 @@ it("renders correctly when offline", async () => {
           <p
             className="lbh-body"
           >
-            The system is fetching the information you need for this process.
+            The system is updating the information you need for this process so that you can go offline at any point.
           </p>
           <label
-            className="jsx-1951065838 govuk-label lbh-label"
+            className="govuk-label lbh-label"
           >
             Error
-            <div
-              className="jsx-1951065838"
-            >
+            <div>
               <div
-                className="jsx-1951065838"
                 style={
                   Object {
-                    "width": "60%",
+                    "width": "43%",
                   }
                 }
               />
             </div>
+            <style
+              jsx={true}
+            >
+              
+            div {
+              width: 100%;
+              height: 1em;
+              background-color: #7fb2a7;
+            }
+
+            div &gt; div {
+              width: 0;
+              background-color: #00664f;
+            }
+          
+            </style>
           </label>
           <button
             aria-disabled={true}
