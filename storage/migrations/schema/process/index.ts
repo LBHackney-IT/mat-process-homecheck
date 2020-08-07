@@ -7,7 +7,7 @@ import from11 from "./from11";
 import from2 from "./from2";
 import from3 from "./from3";
 import from6 from "./from6";
-import from7 from "./from7";
+// import from7 from "./from7";
 
 export default {
   0: from0,
@@ -15,7 +15,7 @@ export default {
   2: from2,
   3: from3,
   6: from6,
-  7: from7,
+  // 7: from7,
   10: from10,
   11: from11,
 } as {

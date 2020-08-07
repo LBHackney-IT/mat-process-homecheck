@@ -8,11 +8,9 @@ import { TenancySummary } from "../../../components/TenancySummary";
 import getProcessRef from "../../../helpers/getProcessRef";
 import useDataValue from "../../../helpers/useDataValue";
 import useValidateData from "../../../helpers/useValidateData";
-import { tenantNotPresent } from "../../../helpers/yesNoNotPresentRadio";
 import MainLayout from "../../../layouts/MainLayout";
 import PageSlugs, { urlObjectForSlug } from "../../../steps/PageSlugs";
 import PageTitles from "../../../steps/PageTitles";
-import ExternalDatabaseSchema from "../../../storage/ExternalDatabaseSchema";
 import ProcessDatabaseSchema, {
   ProcessRef,
 } from "../../../storage/ProcessDatabaseSchema";
