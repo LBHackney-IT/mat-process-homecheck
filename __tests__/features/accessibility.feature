@@ -71,13 +71,6 @@ Feature: Accessibility
     Then the page should be accessible
     And the page should have a descriptive title
 
-  Scenario: Tenant photo page is accessible
-    When I start the process
-    And I wait for the data to be fetched
-    And I visit /tenant-photo/resident-ref for the process
-    Then the page should be accessible
-    And the page should have a descriptive title
-
   Scenario: Next of kin page is accessible
     When I start the process
     And I wait for the data to be fetched

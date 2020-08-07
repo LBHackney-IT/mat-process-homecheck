@@ -101,7 +101,7 @@ const step: ProcessStepDefinition<ResidentDatabaseSchema, "residency"> = {
   },
   step: {
     slug: PageSlugs.Residency,
-    nextSlug: slugForRepeatingStep(PageSlugs.TenantPhoto),
+    nextSlug: slugForRepeatingStep(PageSlugs.NextOfKin),
     submit: (nextSlug?: string): ReturnType<typeof makeSubmit> =>
       makeSubmit({
         slug: nextSlug as PageSlugs | undefined,

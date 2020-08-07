@@ -30,15 +30,6 @@ type ResidentDatabaseSchema = NamedSchema<
       };
     };
 
-    photo: {
-      key: ResidentRef;
-      value: {
-        isWilling: string;
-        images: string[];
-        notes: Notes;
-      };
-    };
-
     nextOfKin: {
       key: ResidentRef;
       value: {
@@ -94,7 +85,6 @@ const storeNames: {
 } = {
   id: true,
   residency: true,
-  photo: true,
   nextOfKin: true,
   carer: true,
   otherSupport: true,
@@ -119,7 +109,6 @@ export const residentNotesPaths: {
   id: ["notes"],
   nextOfKin: [],
   otherSupport: ["notes"],
-  photo: ["notes"],
   residency: ["notes"],
   disabilities: [],
   signature: [],
@@ -140,12 +129,6 @@ export const residentPostVisitActionMap: {
     notes: {
       category: "19",
       subcategory: "100000196",
-    },
-  },
-  photo: {
-    notes: {
-      category: "19",
-      subcategory: "100000185",
     },
   },
   carer: {

@@ -6,7 +6,6 @@ import nextOfKin from "./next-of-kin";
 import otherSupport from "./other-support";
 import presentForCheck from "./present-for-check";
 import residency from "./residency";
-import tenantPhoto from "./tenant-photo";
 
 export type IdAndResidencyProcessStoreNames = "tenantsPresent";
 
@@ -15,7 +14,6 @@ export const idAndResidencyProcessSteps = [presentForCheck];
 export type IdAndResidencyResidentStoreNames =
   | "id"
   | "residency"
-  | "photo"
   | "nextOfKin"
   | "carer"
   | "otherSupport";
@@ -26,10 +24,6 @@ export const idAndResidencyResidentSteps = [
     IdAndResidencyResidentStoreNames
   >,
   residency as ProcessStepDefinition<
-    ResidentDatabaseSchema,
-    IdAndResidencyResidentStoreNames
-  >,
-  tenantPhoto as ProcessStepDefinition<
     ResidentDatabaseSchema,
     IdAndResidencyResidentStoreNames
   >,

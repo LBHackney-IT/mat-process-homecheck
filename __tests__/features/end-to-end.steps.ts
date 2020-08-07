@@ -358,10 +358,6 @@ const processData = {
           },
         ],
       },
-      photo: {
-        isWilling: "yes",
-        images: [imagePath],
-      },
       nextOfKin: {
         fullName: "Next of kin name",
         relationship: "Next of kin relationship",
@@ -582,24 +578,6 @@ defineFeature(loadFeature("./end-to-end.feature"), (test) => {
       ).sendKeys(
         processData.residents[presentTenantRef].residency.notes[0].value
       );
-
-      await browser!.submit();
-
-      // Tenant photo page
-      await expect(browser!.getCurrentUrl()).resolves.toContain(
-        `/tenant-photo/${presentTenantRef}`
-      );
-
-      (
-        await browser!.waitForEnabledElement({
-          id: `tenant-photo-willing-${processData.residents[presentTenantRef].photo.isWilling}`,
-        })
-      ).click();
-      (
-        await browser!.waitForEnabledElement({
-          name: "tenant-photo",
-        })
-      ).sendKeys(processData.residents[presentTenantRef].photo.images[0]);
 
       await browser!.submit();
 

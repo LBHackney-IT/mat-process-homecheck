@@ -60,7 +60,6 @@ defineFeature(loadFeature("./accessibility.feature"), (test) => {
   testAccessibility(test, "Present for check");
   testAccessibility(test, "ID");
   testAccessibility(test, "Residency");
-  testAccessibility(test, "Tenant photo");
   testAccessibility(test, "Next of kin");
   testAccessibility(test, "Carer");
   testAccessibility(test, "Household");

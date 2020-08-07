@@ -404,7 +404,7 @@ export const SectionsPage: NextPage = () => {
           <TaskList
             items={[
               {
-                name: "ID, residency, and tenant information",
+                name: "Tenant information",
                 url: urlObjectForSlug(router, PageSlugs.PresentForCheck),
                 status: idAndResidencyStatus.status,
               },
