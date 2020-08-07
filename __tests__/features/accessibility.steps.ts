@@ -89,7 +89,6 @@ defineFeature(loadFeature("./accessibility.feature"), (test) => {
   testAccessibility(test, "Review");
   testAccessibility(test, "Closed review");
   testAccessibility(test, "Manager review");
-  testAccessibility(test, "Unable to enter closed review");
   testAccessibility(test, "Submit");
   testAccessibility(test, "Confirmed");
   testAccessibility(test, "First failed attempt");

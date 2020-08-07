@@ -315,10 +315,3 @@ Feature: Accessibility
     And I visit /fourth-failed-attempt for the process
     Then the page should be accessible
     And the page should have a descriptive title
-
-  Scenario: Unable to enter closed review page is accessible
-    When I start the process
-    And I wait for the data to be fetched
-    And I visit /unable-to-enter-closed-review for the process
-    Then the page should be accessible
-    And the page should have a descriptive title

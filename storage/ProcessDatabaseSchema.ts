@@ -224,40 +224,6 @@ type ProcessDatabaseSchema = NamedSchema<
       };
     };
 
-    unableToEnter: {
-      key: ProcessRef;
-      value: {
-        firstFailedAttempt: {
-          value: string[];
-          notes: string;
-          date: string;
-        };
-        secondFailedAttempt: {
-          value: string[];
-          notes: string;
-          date: string;
-        };
-        thirdFailedAttempt: {
-          reasons: string[];
-          actions: string[];
-          notes: string;
-          date: string;
-          needsAppointmentLetterReminder: boolean;
-          appointmentLetterReminderCreatedAt: string;
-        };
-        fourthFailedAttempt: {
-          reasons: string[];
-          notes: string;
-          date: string;
-          needsFraudInvestigationReminder: boolean;
-          fraudInvestigationReminderCreatedAt: string;
-          needsFraudInvestigationLetterReminder: boolean;
-          fraudInvestigationLetterReminderCreatedAt: string;
-        };
-        otherNotes: string;
-      };
-    };
-
     managerComment: {
       key: ProcessRef;
       value: string;
@@ -304,7 +270,6 @@ const storeNames: {
   disability: true,
   supportNeeds: true,
   other: true,
-  unableToEnter: true,
   managerComment: true,
 };
 
@@ -366,7 +331,6 @@ export const processNotesPaths: {
     "mentalHealthOver65Notes",
   ],
   other: ["notes"],
-  unableToEnter: [],
   managerComment: [],
 };
 
@@ -533,20 +497,6 @@ export const processPostVisitActionMap: {
     notes: {
       category: "24",
       subcategory: "100000209",
-    },
-  },
-  unableToEnter: {
-    "thirdFailedAttempt.needsAppointmentLetterReminder": {
-      category: "30",
-      subcategory: "100000206",
-    },
-    "fourthFailedAttempt.needsFraudInvestigationReminder": {
-      category: "30",
-      subcategory: "100000595",
-    },
-    "fourthFailedAttempt.needsFraudInvestigationLetterReminder": {
-      category: "30",
-      subcategory: "100000310",
     },
   },
   managerComment: {},
