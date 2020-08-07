@@ -200,10 +200,7 @@ const ReviewPage: NextPage = () => {
   ].filter(({ value }) => value.length > 0);
 
   return (
-    <MainLayout
-      title={PageTitles.ManagerReview}
-      heading="Review Tenancy and Household Check"
-    >
+    <MainLayout title={PageTitles.ManagerReview} heading="Review Home Check">
       <TenancySummary
         details={{
           address: address.result,

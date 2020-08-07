@@ -66,9 +66,9 @@ const SubmitPage: NextPage = () => {
         ) : (
           <>
             <Paragraph>
-              The Tenancy and Household Check for the tenancy at {address},
-              occupied by {tenants}, has been saved to your device ready to be
-              sent to your manager for review.
+              The Home Check for the tenancy at {address}, occupied by {tenants}
+              , has been saved to your device ready to be sent to your manager
+              for review.
             </Paragraph>
             <Paragraph>
               <strong>You need to be online on this device to continue.</strong>

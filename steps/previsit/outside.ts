@@ -20,7 +20,7 @@ import PageTitles from "../PageTitles";
 
 const step = {
   title: PageTitles.Outside,
-  heading: "Tenancy and Household Check",
+  heading: "Home Check",
   step: {
     slug: PageSlugs.Outside,
     nextSlug: PageSlugs.Start,

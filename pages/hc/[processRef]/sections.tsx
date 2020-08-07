@@ -365,11 +365,7 @@ export const SectionsPage: NextPage = () => {
   const wellbeingSupportStatus = useWellbeingSupportStatus(processRef);
 
   return (
-    <MainLayout
-      title={PageTitles.Sections}
-      heading="Tenancy and Household Check"
-      pausable
-    >
+    <MainLayout title={PageTitles.Sections} heading="Home Check" pausable>
       <TenancySummary
         details={{
           address: residentData.result

@@ -211,10 +211,7 @@ const ReviewPage: NextPage = () => {
   });
 
   return (
-    <MainLayout
-      title={PageTitles.ClosedReview}
-      heading="Review Tenancy and Household Check"
-    >
+    <MainLayout title={PageTitles.ClosedReview} heading="Review Home Check">
       <TenancySummary
         details={{
           address: address.result,

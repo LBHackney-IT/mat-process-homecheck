@@ -17,7 +17,7 @@ import PageTitles from "../PageTitles";
 
 const step = {
   title: PageTitles.Start,
-  heading: "Start Tenancy and Household Check",
+  heading: "Start Home Check",
   step: {
     slug: PageSlugs.Start,
     nextSlug: PageSlugs.AboutVisit,
@@ -33,7 +33,7 @@ const step = {
           Component: Heading,
           props: {
             level: HeadingLevels.H2,
-            children: "About Tenancy and Household Check",
+            children: "About Home Check",
           },
         })
       ),

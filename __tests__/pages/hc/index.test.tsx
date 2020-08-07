@@ -2,7 +2,7 @@ import isOnline from "is-online";
 import * as router from "next/router";
 import React from "react";
 import { act, create, ReactTestRenderer } from "react-test-renderer";
-import IndexPage from "../../../pages/thc/index";
+import IndexPage from "../../../pages/hc/index";
 import { promiseToWaitForNextTick } from "../../helpers/promise";
 
 jest.mock("is-online");
@@ -35,8 +35,8 @@ it("redirects to the loading page when online", async () => {
 
   expect(routerReplaceMock).toHaveBeenCalledTimes(1);
   expect(routerReplaceMock).toHaveBeenCalledWith(
-    { pathname: "/thc/[processRef]/loading" },
-    { pathname: "/thc/test-process-ref/loading" }
+    { pathname: "/hc/[processRef]/loading" },
+    { pathname: "/hc/test-process-ref/loading" }
   );
 });
 
@@ -143,7 +143,7 @@ it("renders correctly when offline", async () => {
                 BETA
               </strong>
                This is a new service – your
-               
+
               <a
                 className="govuk-link lbh-link"
                 href="https://feedback.form"
@@ -151,7 +151,7 @@ it("renders correctly when offline", async () => {
               >
                 feedback
               </a>
-               
+
               (online only, opens in a new tab) will help us to improve it.
             </p>
             <hr />
@@ -162,7 +162,7 @@ it("renders correctly when offline", async () => {
             <h1
               className="lbh-heading-h1"
             >
-              Tenancy and Household Check
+              Home Check
             </h1>
           </div>
           <p
@@ -175,7 +175,7 @@ it("renders correctly when offline", async () => {
       <style
         jsx={true}
       >
-        
+
             :global(#main-content) {
               padding-top: 0;
             }
@@ -193,7 +193,7 @@ it("renders correctly when offline", async () => {
               margin-top: 0;
               margin-left: 2em;
             }
-          
+
       </style>,
     ]
   `);

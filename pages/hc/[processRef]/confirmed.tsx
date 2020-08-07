@@ -18,9 +18,9 @@ const ConfirmedPage: NextPage = () => {
 
   const { status } = router.query;
 
-  const managerApprovedText = `The Tenancy and Household Check has been approved by you.`;
-  const managerDeclinedText = `The Tenancy and Household Check has been declined by you. The Housing Officer will be notified.`;
-  const officerText = `The Tenancy and Household Check has been submitted for manager review.`;
+  const managerApprovedText = `The Home Check has been approved by you.`;
+  const managerDeclinedText = `The Home Check has been declined by you. The Housing Officer will be notified.`;
+  const officerText = `The Home Check has been submitted for manager review.`;
 
   const managerText = status
     ? status === "2"

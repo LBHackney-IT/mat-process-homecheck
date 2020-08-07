@@ -122,11 +122,7 @@ const ReviewPage: NextPage = () => {
   ].filter(({ value }) => value.length > 0);
 
   return (
-    <MainLayout
-      title={PageTitles.Review}
-      heading="Review Tenancy and Household Check"
-      pausable
-    >
+    <MainLayout title={PageTitles.Review} heading="Review Home Check" pausable>
       <React.Fragment>
         <TenancySummary
           details={{
@@ -144,8 +140,8 @@ const ReviewPage: NextPage = () => {
         `}</style>
       </React.Fragment>
       <Paragraph>
-        The Tenancy and Household Check has now been completed. Please review
-        the answers with all present tenants and ask them to sign.
+        The Home Check has now been completed. Please review the answers with
+        all present tenants and ask them to sign.
       </Paragraph>
       <IdAndResidencyReviewSection tenants={tenantsWithPresentStatus} />
       <HouseholdReviewSection />
