@@ -25,10 +25,7 @@ interface Status {
 }
 
 const useIdAndResidencyStatus = (
-  processRef: ProcessRef | undefined,
-  residentData:
-    | StoreValue<ExternalDatabaseSchema["schema"], "residents">
-    | undefined
+  processRef: ProcessRef | undefined
 ): Status => {
   const tenantsPresent = useDataValue(
     Storage.ProcessContext,
@@ -37,7 +34,6 @@ const useIdAndResidencyStatus = (
     (values) => (processRef !== undefined ? values[processRef] : undefined)
   );
 
-  const allTenantIds = residentData?.tenants.map((tenant) => tenant.id);
   const presentTenantIds = tenantsPresent.result;
 
   const started = useValidateData(
@@ -59,51 +55,29 @@ const useIdAndResidencyStatus = (
     }
   );
 
-  const idCompleted = useValidateData(
+  const isCompleted = useValidateData(
     Storage.ResidentContext,
-    ["id"],
+    ["nextOfKin"],
     presentTenantIds,
     (valueSets) => {
-      const idSet = valueSets.id;
+      const nextOfKinSet = valueSets.nextOfKin;
 
-      if (idSet === undefined) {
+      if (nextOfKinSet === undefined) {
         return false;
       }
 
       const allCompletedRequiredStep =
-        Object.values(idSet).length === presentTenantIds?.length &&
-        Object.values(idSet).every(
-          (id) => id?.type && id.type !== tenantNotPresent.value
+        Object.values(nextOfKinSet).length === presentTenantIds?.length &&
+        Object.values(nextOfKinSet).every(
+          (nextOfKinSet) => nextOfKinSet?.fullName
         );
 
       return allCompletedRequiredStep;
     }
   );
 
-  const residencyCompleted = useValidateData(
-    Storage.ResidentContext,
-    ["residency"],
-    allTenantIds,
-    (valueSets) => {
-      const residencySet = valueSets.residency;
-
-      if (residencySet === undefined) {
-        return false;
-      }
-
-      const allCompletedRequiredStep =
-        Object.values(residencySet).length === allTenantIds?.length &&
-        Object.values(residencySet).every((residency) => residency?.type);
-
-      return allCompletedRequiredStep;
-    }
-  );
-
   const loading =
-    tenantsPresent.loading ||
-    started.loading ||
-    idCompleted.loading ||
-    residencyCompleted.loading;
+    tenantsPresent.loading || started.loading || isCompleted.loading;
 
   const errors = [];
 
@@ -115,12 +89,8 @@ const useIdAndResidencyStatus = (
     errors.push(started.error);
   }
 
-  if (idCompleted.error) {
-    errors.push(idCompleted.error);
-  }
-
-  if (residencyCompleted.error) {
-    errors.push(residencyCompleted.error);
+  if (isCompleted.error) {
+    errors.push(isCompleted.error);
   }
 
   // Note that we don't check the last step like we do for other sections, as
@@ -131,7 +101,7 @@ const useIdAndResidencyStatus = (
     status: loading
       ? undefined
       : started.result
-      ? idCompleted.result && residencyCompleted.result
+      ? isCompleted.result
         ? TaskListStatus.Completed
         : TaskListStatus.Started
       : TaskListStatus.NotStarted,
@@ -356,10 +326,7 @@ export const SectionsPage: NextPage = () => {
     (values) => (processRef ? values[processRef] : undefined)
   );
 
-  const idAndResidencyStatus = useIdAndResidencyStatus(
-    processRef,
-    residentData.result
-  );
+  const tenantInfoStatus = useIdAndResidencyStatus(processRef);
   const householdStatus = useHouseholdStatus(processRef);
   const propertyInspectionStatus = usePropertyInspectionStatus(processRef);
   const wellbeingSupportStatus = useWellbeingSupportStatus(processRef);
@@ -391,12 +358,12 @@ export const SectionsPage: NextPage = () => {
         }}
       />
 
-      {idAndResidencyStatus.loading ? (
+      {tenantInfoStatus.loading ? (
         <Paragraph>Checking process status...</Paragraph>
       ) : (
         <>
           <Paragraph>
-            {idAndResidencyStatus.status === TaskListStatus.Completed
+            {tenantInfoStatus.status === TaskListStatus.Completed
               ? "Please complete the remaining sections."
               : "To begin the check, verify the tenant's ID and proof of residency."}
           </Paragraph>
@@ -406,13 +373,13 @@ export const SectionsPage: NextPage = () => {
               {
                 name: "Tenant information",
                 url: urlObjectForSlug(router, PageSlugs.PresentForCheck),
-                status: idAndResidencyStatus.status,
+                status: tenantInfoStatus.status,
               },
               {
                 name: "Household",
                 url: urlObjectForSlug(router, PageSlugs.Household),
                 status:
-                  idAndResidencyStatus.status === TaskListStatus.Completed
+                  tenantInfoStatus.status === TaskListStatus.Completed
                     ? householdStatus.status
                     : TaskListStatus.Unavailable,
               },
@@ -420,7 +387,7 @@ export const SectionsPage: NextPage = () => {
                 name: "Property inspection",
                 url: urlObjectForSlug(router, PageSlugs.Rooms),
                 status:
-                  idAndResidencyStatus.status === TaskListStatus.Completed
+                  tenantInfoStatus.status === TaskListStatus.Completed
                     ? propertyInspectionStatus.status
                     : TaskListStatus.Unavailable,
               },
@@ -428,7 +395,7 @@ export const SectionsPage: NextPage = () => {
                 name: "Wellbeing support",
                 url: urlObjectForSlug(router, PageSlugs.HomeCheck),
                 status:
-                  idAndResidencyStatus.status === TaskListStatus.Completed
+                  tenantInfoStatus.status === TaskListStatus.Completed
                     ? wellbeingSupportStatus.status
                     : TaskListStatus.Unavailable,
               },
@@ -436,7 +403,7 @@ export const SectionsPage: NextPage = () => {
                 name: "Review and submit",
                 url: urlObjectForSlug(router, PageSlugs.Review),
                 status:
-                  idAndResidencyStatus.status === TaskListStatus.Completed
+                  tenantInfoStatus.status === TaskListStatus.Completed
                     ? TaskListStatus.NotStarted
                     : TaskListStatus.Unavailable,
               },

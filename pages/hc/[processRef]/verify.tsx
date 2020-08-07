@@ -17,7 +17,6 @@ import slugWithId from "../../../helpers/slugWithId";
 import urlsForRouter from "../../../helpers/urlsForRouter";
 import useDataSet from "../../../helpers/useDataSet";
 import useDataValue from "../../../helpers/useDataValue";
-import { tenantNotPresent } from "../../../helpers/yesNoNotPresentRadio";
 import MainLayout from "../../../layouts/MainLayout";
 import PageSlugs, { urlObjectForSlug } from "../../../steps/PageSlugs";
 import PageTitles from "../../../steps/PageTitles";
@@ -50,61 +49,40 @@ export const VerifyPage: NextPage = () => {
   const tenants = residentData.result?.tenants || [];
   const tenantIds = tenants.map((tenant) => tenant.id);
 
-  const idData = useDataSet(Storage.ResidentContext, "id", tenantIds);
-  const residencyData = useDataSet(
+  const nextOfKinData = useDataSet(
     Storage.ResidentContext,
-    "residency",
+    "nextOfKin",
     tenantIds
   );
+  console.log("VerifyPage:NextPage -> nextOfKinData", nextOfKinData);
 
   const tenantData = tenants.map((tenant) => ({
     id: tenant.id,
     name: tenant.fullName,
     dateOfBirth: tenant.dateOfBirth,
-    verified: {
-      id:
-        idData.result &&
-        idData.result[tenant.id]?.type &&
-        idData.result[tenant.id]?.type !== tenantNotPresent.value
-          ? true
-          : tenantsPresent.result?.includes(tenant.id)
-          ? false
-          : undefined,
-      residency: residencyData.result
-        ? Boolean(residencyData.result[tenant.id])
+    status:
+      nextOfKinData.result && nextOfKinData.result[tenant.id]?.fullName
+        ? true
         : false,
-    },
   }));
 
-  const allVerified =
+  const allCompleted =
     !residentData.loading &&
-    tenantData.every(
-      (tenant) =>
-        tenant.verified.id !== false && tenant.verified.residency !== false
-    );
+    tenantData.every((tenant) => tenant.status !== false);
 
   const tableRows = tenantData.map((tenant) => {
     return [
       tenant.name,
       formatDate(tenant.dateOfBirth, "d MMMM yyyy"),
-      tenantsPresent.loading
-        ? "Loading..."
-        : tenant.verified.id
-        ? "Verified"
-        : tenant.verified.id === false
-        ? "Unverified"
-        : "-",
+      tenant.status ? "Completed" : "Not completed",
       <Link
-        key="verify-link"
+        key="edit-link"
         href={
-          urlObjectForSlug(router, slugWithId(PageSlugs.Id, tenant.id)).pathname
+          urlObjectForSlug(router, slugWithId(PageSlugs.NextOfKin, tenant.id))
+            .pathname
         }
       >
-        {tenantsPresent.loading
-          ? "Loading..."
-	  : tenant.verified.id !== false
-          ? "Edit"
-          : "Verify"}
+        {tenantsPresent.loading ? "Loading..." : "Edit"}
       </Link>,
     ];
   });
@@ -159,11 +137,11 @@ export const VerifyPage: NextPage = () => {
       <Heading level={HeadingLevels.H2}>Select a tenant to check</Heading>
 
       <Table
-	headings={["Tenant", "Date of birth", "ID", "Action"]}
+        headings={["Tenant", "Date of birth", "Status", "Action"]}
         rows={tableRows}
       />
 
-      {allVerified &&
+      {allCompleted &&
         (href.pathname && as.pathname ? (
           <NextLink href={href} as={as}>
             {button}

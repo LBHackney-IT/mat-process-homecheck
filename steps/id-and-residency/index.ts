@@ -1,26 +1,18 @@
 import ProcessStepDefinition from "../../helpers/ProcessStepDefinition";
 import ResidentDatabaseSchema from "../../storage/ResidentDatabaseSchema";
 import carer from "./carer";
-import id from "./id";
 import nextOfKin from "./next-of-kin";
 import otherSupport from "./other-support";
 import presentForCheck from "./present-for-check";
 
-export type IdAndResidencyProcessStoreNames = "tenantsPresent";
-
 export const idAndResidencyProcessSteps = [presentForCheck];
 
 export type IdAndResidencyResidentStoreNames =
-  | "id"
   | "nextOfKin"
   | "carer"
   | "otherSupport";
 
 export const idAndResidencyResidentSteps = [
-  id as ProcessStepDefinition<
-    ResidentDatabaseSchema,
-    IdAndResidencyResidentStoreNames
-  >,
   nextOfKin as ProcessStepDefinition<
     ResidentDatabaseSchema,
     IdAndResidencyResidentStoreNames
