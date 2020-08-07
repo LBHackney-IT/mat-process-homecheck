@@ -89,7 +89,7 @@ const step: ProcessStepDefinition<ResidentDatabaseSchema, "id"> = {
   },
   step: {
     slug: PageSlugs.Id,
-    nextSlug: slugForRepeatingStep(PageSlugs.Residency),
+    nextSlug: slugForRepeatingStep(PageSlugs.NextOfKin),
     submit: (nextSlug?: string): ReturnType<typeof makeSubmit> =>
       makeSubmit({
         slug: nextSlug as PageSlugs | undefined,

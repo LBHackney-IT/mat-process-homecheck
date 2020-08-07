@@ -549,38 +549,6 @@ defineFeature(loadFeature("./end-to-end.feature"), (test) => {
 
       await browser!.submit();
 
-      // Residency page
-      await expect(browser!.getCurrentUrl()).resolves.toContain(
-        `/residency/${presentTenantRef}`
-      );
-
-      (
-        await browser!.waitForEnabledElement({
-          id: `residency-proof-type-${processData.residents[
-            presentTenantRef
-          ].residency.type.replace(/\s/g, "-")}`,
-        })
-      ).click();
-      (
-        await browser!.waitForEnabledElement({
-          name: "residency-proof-images",
-        })
-      ).sendKeys(processData.residents[presentTenantRef].residency.images[0]);
-      (
-        await browser!.waitForEnabledElement({
-          id: "residency-notes-summary",
-        })
-      ).click();
-      (
-        await browser!.waitForEnabledElement({
-          name: "residency-notes",
-        })
-      ).sendKeys(
-        processData.residents[presentTenantRef].residency.notes[0].value
-      );
-
-      await browser!.submit();
-
       // Next of kin page
       await expect(browser!.getCurrentUrl()).resolves.toContain(
         `/next-of-kin/${presentTenantRef}`

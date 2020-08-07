@@ -94,13 +94,6 @@ export const VerifyPage: NextPage = () => {
         : tenant.verified.id === false
         ? "Unverified"
         : "-",
-      tenantsPresent.loading
-        ? "Loading..."
-        : tenant.verified.residency
-        ? "Verified"
-        : tenant.verified.residency === false
-        ? "Unverified"
-        : "-",
       <Link
         key="verify-link"
         href={
@@ -109,7 +102,7 @@ export const VerifyPage: NextPage = () => {
       >
         {tenantsPresent.loading
           ? "Loading..."
-          : tenant.verified.id !== false && tenant.verified.residency !== false
+	  : tenant.verified.id !== false
           ? "Edit"
           : "Verify"}
       </Link>,
@@ -128,11 +121,7 @@ export const VerifyPage: NextPage = () => {
   );
 
   return (
-    <MainLayout
-      title={PageTitles.Verify}
-      heading="Verify tenant details"
-      pausable
-    >
+    <MainLayout title={PageTitles.Verify} heading="Tenant details" pausable>
       <TenancySummary
         details={{
           address: residentData.result
@@ -170,7 +159,7 @@ export const VerifyPage: NextPage = () => {
       <Heading level={HeadingLevels.H2}>Select a tenant to check</Heading>
 
       <Table
-        headings={["Tenant", "Date of birth", "ID", "Residency", "Action"]}
+	headings={["Tenant", "Date of birth", "ID", "Action"]}
         rows={tableRows}
       />
 
