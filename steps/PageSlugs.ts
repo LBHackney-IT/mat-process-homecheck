@@ -63,14 +63,6 @@ enum PageSlugs {
   // Pause
   Pause = "pause",
   Paused = "paused",
-
-  // Unable to enter
-  FirstFailedAttempt = "first-failed-attempt",
-  SecondFailedAttempt = "second-failed-attempt",
-  ThirdFailedAttempt = "third-failed-attempt",
-  FourthFailedAttempt = "fourth-failed-attempt",
-  UnableToEnterReview = "unable-to-enter-review",
-  UnableToEnterClosedReview = "unable-to-enter-closed-review",
 }
 
 const slugs: {
@@ -122,12 +114,6 @@ const slugs: {
   confirmed: false,
   pause: false,
   paused: false,
-  "first-failed-attempt": true,
-  "second-failed-attempt": true,
-  "third-failed-attempt": true,
-  "fourth-failed-attempt": true,
-  "unable-to-enter-review": false,
-  "unable-to-enter-closed-review": false,
 };
 
 export const stepSlugs = Object.entries(slugs)
