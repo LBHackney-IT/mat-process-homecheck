@@ -61,9 +61,9 @@ const PausePage: NextPage = () => {
                 : "You are currently working offline."}
             </Paragraph>
             <Paragraph>
-              The Tenancy and Household Check for the tenancy at {address},
-              occupied by {tenants}, has been saved to your device but still
-              needs to be saved to your work tray so you can resume it later.
+              The Home Check for the tenancy at {address}, occupied by {tenants}
+              , has been saved to your device but still needs to be saved to
+              your work tray so you can resume it later.
             </Paragraph>
             <Paragraph>
               <strong>You need to be online on this device to continue.</strong>

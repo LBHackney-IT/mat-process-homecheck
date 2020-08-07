@@ -1,6 +1,6 @@
 import React from "react";
 import { create } from "react-test-renderer";
-import ConfirmedPage from "../../../../pages/thc/[processRef]/confirmed";
+import ConfirmedPage from "../../../../pages/hc/[processRef]/confirmed";
 
 it("renders correctly", () => {
   const component = create(<ConfirmedPage />);
@@ -97,7 +97,7 @@ it("renders correctly", () => {
                 BETA
               </strong>
                This is a new service – your
-               
+
               <a
                 className="govuk-link lbh-link"
                 href="https://feedback.form"
@@ -105,7 +105,7 @@ it("renders correctly", () => {
               >
                 feedback
               </a>
-               
+
               (online only, opens in a new tab) will help us to improve it.
             </p>
             <hr />
@@ -127,7 +127,7 @@ it("renders correctly", () => {
               <p
                 className="lbh-body"
               >
-                The Tenancy and Household Check has been submitted for manager review.
+                The Home Check has been submitted for manager review.
               </p>
             </div>
           </section>
@@ -167,7 +167,7 @@ it("renders correctly", () => {
       <style
         jsx={true}
       >
-        
+
             :global(#main-content) {
               padding-top: 0;
             }
@@ -185,7 +185,7 @@ it("renders correctly", () => {
               margin-top: 0;
               margin-left: 2em;
             }
-          
+
       </style>,
     ]
   `);

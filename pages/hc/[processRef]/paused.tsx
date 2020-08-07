@@ -11,8 +11,8 @@ const PausedPage: NextPage = () => {
     <MainLayout title={PageTitles.Paused}>
       <PageAnnouncement title="Process paused">
         <Paragraph>
-          The Tenancy and Household Check has been paused and saved to your work
-          tray ready to continue later.
+          The Home Check has been paused and saved to your work tray ready to
+          continue later.
         </Paragraph>
       </PageAnnouncement>
 

@@ -118,7 +118,7 @@ const UnableToEnterReviewPage: NextPage = () => {
   return (
     <MainLayout
       title={PageTitles.UnableToEnterReview}
-      heading="Submit Tenancy and Household Check"
+      heading="Submit Home Check"
     >
       <React.Fragment>
         <TenancySummary
@@ -131,8 +131,8 @@ const UnableToEnterReviewPage: NextPage = () => {
         />
       </React.Fragment>
       <Paragraph>
-        Four attempts have been made to do a Tenancy and Household Check. The
-        actions taken at each attempt have been recorded.
+        Four attempts have been made to do a Home Check. The actions taken at
+        each attempt have been recorded.
       </Paragraph>
       <ReviewSection
         heading={`First failed attempt: ${firstFailedAttemptDate}`}

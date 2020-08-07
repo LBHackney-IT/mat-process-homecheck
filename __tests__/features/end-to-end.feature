@@ -1,7 +1,7 @@
 Feature: End to end
 
   As a user
-  I want to be able to perform a Tenancy and Household Check
+  I want to be able to perform a Home Check
   So that I can check on a tenancy
 
   Scenario: Performing a check

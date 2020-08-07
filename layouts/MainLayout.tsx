@@ -42,7 +42,7 @@ const MainLayout = ({
 }: Props): React.ReactElement => {
   const router = useRouter();
 
-  const fullTitle = `${title || heading} - THC - Manage a tenancy`;
+  const fullTitle = `${title || heading} - Home Check - Manage a tenancy`;
 
   const { href, as } = urlsForRouter(
     router,
