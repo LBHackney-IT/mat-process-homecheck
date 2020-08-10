@@ -460,32 +460,6 @@ defineFeature(loadFeature("./end-to-end.feature"), (test) => {
       await browser!.submit();
 
       // About visit page
-      await expect(browser!.getCurrentUrl()).resolves.toContain(
-        `${processRef}/about-visit`
-      );
-
-      (
-        await browser!.waitForEnabledElement({
-          id: `unannounced-visit-${processData.isUnannouncedVisit.value}`,
-        })
-      ).click();
-      (
-        await browser!.waitForEnabledElement({
-          name: "unannounced-visit-notes",
-        })
-      ).sendKeys(processData.isUnannouncedVisit.notes[0].value);
-      (
-        await browser!.waitForEnabledElement({
-          id: `inside-property-${processData.isVisitInside.value}`,
-        })
-      ).click();
-      (
-        await browser!.waitForEnabledElement({
-          name: "inside-property-notes",
-        })
-      ).sendKeys(processData.isVisitInside.notes[0].value);
-
-      await browser!.submit();
 
       // Sections page
       await expect(browser!.getCurrentUrl()).resolves.toContain(

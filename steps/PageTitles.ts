@@ -7,7 +7,6 @@ enum PageTitles {
   // Previsit
   Outside = "Outside",
   Start = "Start",
-  AboutVisit = "About visit",
 
   // ID, residency, and tenant information
   PresentForCheck = "Present for check",
