@@ -270,17 +270,17 @@ const useWellbeingSupportStatus = (
 ): Status => {
   const started = useValidateData(
     Storage.ProcessContext,
-    ["homeCheck"],
+    ["healthConcerns"],
     processRef,
     (valueSets) => {
-      const homeCheckSet = valueSets.homeCheck;
+      const healthConcernsSet = valueSets.healthConcerns;
 
-      if (homeCheckSet === undefined || processRef === undefined) {
+      if (healthConcernsSet === undefined || processRef === undefined) {
         return false;
       }
 
-      const homeCheck = homeCheckSet[processRef];
-      const completedFirstStep = homeCheck !== undefined;
+      const healthConcerns = healthConcernsSet[processRef];
+      const completedFirstStep = healthConcerns !== undefined;
 
       return completedFirstStep;
     }
@@ -288,26 +288,26 @@ const useWellbeingSupportStatus = (
 
   const completed = useValidateData(
     Storage.ProcessContext,
-    ["homeCheck", "supportNeeds"],
+    ["healthConcerns", "supportNeeds"],
     processRef,
     (valueSets) => {
-      const homeCheckSet = valueSets.homeCheck;
+      const healthConcernsSet = valueSets.healthConcerns;
       const supportNeedsSet = valueSets.supportNeeds;
 
       if (
-        homeCheckSet === undefined ||
+        healthConcernsSet === undefined ||
         supportNeedsSet === undefined ||
         processRef === undefined
       ) {
         return false;
       }
 
-      const homeCheck = homeCheckSet[processRef] as
-        | StoreValue<ProcessDatabaseSchema["schema"], "homeCheck">
+      const healthConcerns = healthConcernsSet[processRef] as
+        | StoreValue<ProcessDatabaseSchema["schema"], "healthConcerns">
         | undefined;
       const supportNeeds = supportNeedsSet[processRef];
       const completedLastStep =
-        homeCheck?.value === "no" || supportNeeds !== undefined;
+        healthConcerns?.value === "no" || supportNeeds !== undefined;
 
       return completedLastStep;
     }
@@ -426,7 +426,7 @@ export const SectionsPage: NextPage = () => {
               },
               {
                 name: "Wellbeing support",
-                url: urlObjectForSlug(router, PageSlugs.HomeCheck),
+                url: urlObjectForSlug(router, PageSlugs.Health),
                 status:
                   idAndResidencyStatus.status === TaskListStatus.Completed
                     ? wellbeingSupportStatus.status

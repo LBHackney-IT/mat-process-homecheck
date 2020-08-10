@@ -175,13 +175,6 @@ type ProcessDatabaseSchema = NamedSchema<
       };
     };
 
-    homeCheck: {
-      key: ProcessRef;
-      value: {
-        value: string;
-      };
-    };
-
     healthConcerns: {
       key: ProcessRef;
       value: {
@@ -265,7 +258,6 @@ const storeNames: {
   isVisitInside: true,
   tenantsPresent: true,
   household: true,
-  homeCheck: true,
   healthConcerns: true,
   disability: true,
   supportNeeds: true,
@@ -318,7 +310,6 @@ export const processNotesPaths: {
     "incomeOfficer.notes",
     "otherProperty.notes",
   ],
-  homeCheck: [],
   healthConcerns: ["notes"],
   disability: ["notes"],
   supportNeeds: [
@@ -486,7 +477,6 @@ export const processPostVisitActionMap: {
       subcategory: "100000560",
     },
   },
-  homeCheck: {},
   healthConcerns: {
     notes: {
       category: "23",
