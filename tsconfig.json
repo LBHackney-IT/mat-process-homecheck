@@ -19,5 +19,6 @@
       "remultiform/*": ["./node_modules/remultiform/dist/esm/*"]
     }
   },
-  "exclude": ["**/node_modules/**/*", "__tests__/**/*", "server/**/*"]
+  "exclude": ["**/node_modules/**/*", "__tests__/**/*", "server/**/*"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }
