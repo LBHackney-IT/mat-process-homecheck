@@ -1,6 +1,7 @@
 import { Upgrade } from "remultiform/database";
 import ProcessDatabaseSchema from "../../../ProcessDatabaseSchema";
 
-export default (upgrade: Upgrade<ProcessDatabaseSchema["schema"]>): void => {
+const upgradeSchema = (_: Upgrade<ProcessDatabaseSchema["schema"]>): void => {
   // upgrade.createStore("unableToEnter");
 };
+export default upgradeSchema;
