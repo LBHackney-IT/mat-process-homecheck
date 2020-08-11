@@ -43,13 +43,6 @@ Feature: Accessibility
     Then the page should be accessible
     And the page should have a descriptive title
 
-  Scenario: About visit page is accessible
-    When I start the process
-    And I wait for the data to be fetched
-    And I visit /about-visit for the process
-    Then the page should be accessible
-    And the page should have a descriptive title
-
   Scenario: Present for check page is accessible
     When I start the process
     And I wait for the data to be fetched

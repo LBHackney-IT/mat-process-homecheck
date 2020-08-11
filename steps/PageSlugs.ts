@@ -10,7 +10,6 @@ enum PageSlugs {
   // Previsit
   Outside = "outside",
   Start = "start",
-  AboutVisit = "about-visit",
 
   // ID, residency, and tenant information
   PresentForCheck = "present-for-check",
@@ -70,7 +69,6 @@ const slugs: {
   sections: false,
   outside: true,
   start: true,
-  "about-visit": true,
   "present-for-check": true,
   verify: false,
   id: true,
