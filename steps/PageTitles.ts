@@ -13,8 +13,6 @@ enum PageTitles {
   PresentForCheck = "Present for check",
   Verify = "Verify tenant details",
   Id = "ID",
-  Residency = "Residency",
-  TenantPhoto = "Tenant photo",
   NextOfKin = "Next of kin",
   Carer = "Carer",
   OtherSupport = "Other support",

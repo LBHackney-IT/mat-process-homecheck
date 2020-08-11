@@ -356,10 +356,6 @@ const processData = {
           },
         ],
       },
-      photo: {
-        isWilling: "yes",
-        images: [imagePath],
-      },
       nextOfKin: {
         fullName: "Next of kin name",
         relationship: "Next of kin relationship",
@@ -548,56 +544,6 @@ defineFeature(loadFeature("./end-to-end.feature"), (test) => {
           name: "id-notes",
         })
       ).sendKeys(processData.residents[presentTenantRef].id.notes[0].value);
-
-      await browser!.submit();
-
-      // Residency page
-      await expect(browser!.getCurrentUrl()).resolves.toContain(
-        `/residency/${presentTenantRef}`
-      );
-
-      (
-        await browser!.waitForEnabledElement({
-          id: `residency-proof-type-${processData.residents[
-            presentTenantRef
-          ].residency.type.replace(/\s/g, "-")}`,
-        })
-      ).click();
-      (
-        await browser!.waitForEnabledElement({
-          name: "residency-proof-images",
-        })
-      ).sendKeys(processData.residents[presentTenantRef].residency.images[0]);
-      (
-        await browser!.waitForEnabledElement({
-          id: "residency-notes-summary",
-        })
-      ).click();
-      (
-        await browser!.waitForEnabledElement({
-          name: "residency-notes",
-        })
-      ).sendKeys(
-        processData.residents[presentTenantRef].residency.notes[0].value
-      );
-
-      await browser!.submit();
-
-      // Tenant photo page
-      await expect(browser!.getCurrentUrl()).resolves.toContain(
-        `/tenant-photo/${presentTenantRef}`
-      );
-
-      (
-        await browser!.waitForEnabledElement({
-          id: `tenant-photo-willing-${processData.residents[presentTenantRef].photo.isWilling}`,
-        })
-      ).click();
-      (
-        await browser!.waitForEnabledElement({
-          name: "tenant-photo",
-        })
-      ).sendKeys(processData.residents[presentTenantRef].photo.images[0]);
 
       await browser!.submit();
 

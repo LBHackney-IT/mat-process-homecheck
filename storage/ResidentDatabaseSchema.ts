@@ -12,33 +12,6 @@ type ResidentDatabaseSchema = NamedSchema<
   typeof residentDatabaseName,
   typeof databaseSchemaVersion,
   {
-    id: {
-      key: ResidentRef;
-      value: {
-        type: string;
-        images: string[];
-        notes: Notes;
-      };
-    };
-
-    residency: {
-      key: ResidentRef;
-      value: {
-        type: string;
-        images: string[];
-        notes: Notes;
-      };
-    };
-
-    photo: {
-      key: ResidentRef;
-      value: {
-        isWilling: string;
-        images: string[];
-        notes: Notes;
-      };
-    };
-
     nextOfKin: {
       key: ResidentRef;
       value: {
@@ -92,9 +65,6 @@ type ResidentDatabaseSchema = NamedSchema<
 const storeNames: {
   [Name in StoreNames<ResidentDatabaseSchema["schema"]>]: boolean;
 } = {
-  id: true,
-  residency: true,
-  photo: true,
   nextOfKin: true,
   carer: true,
   otherSupport: true,
@@ -116,11 +86,8 @@ export const residentNotesPaths: {
   [Name in StoreNames<ResidentDatabaseSchema["schema"]>]: string[] | never[];
 } = {
   carer: ["notes"],
-  id: ["notes"],
   nextOfKin: [],
   otherSupport: ["notes"],
-  photo: ["notes"],
-  residency: ["notes"],
   disabilities: [],
   signature: [],
 };
@@ -130,24 +97,6 @@ export const residentPostVisitActionMap: {
     [path: string]: { category: string; subcategory: string };
   };
 } = {
-  id: {
-    notes: {
-      category: "19",
-      subcategory: "100000196",
-    },
-  },
-  residency: {
-    notes: {
-      category: "19",
-      subcategory: "100000196",
-    },
-  },
-  photo: {
-    notes: {
-      category: "19",
-      subcategory: "100000185",
-    },
-  },
   carer: {
     notes: {
       category: "19",

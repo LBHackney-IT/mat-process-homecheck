@@ -16,8 +16,6 @@ enum PageSlugs {
   PresentForCheck = "present-for-check",
   Verify = "verify",
   Id = "id",
-  Residency = "residency",
-  TenantPhoto = "tenant-photo",
   NextOfKin = "next-of-kin",
   Carer = "carer",
   OtherSupport = "other-support",
@@ -76,8 +74,6 @@ const slugs: {
   "present-for-check": true,
   verify: false,
   id: true,
-  residency: true,
-  "tenant-photo": true,
   "next-of-kin": true,
   carer: true,
   "other-support": true,
@@ -120,8 +116,6 @@ export const stepSlugs = Object.entries(slugs)
 
 export const repeatingStepSlugs = [
   PageSlugs.Id,
-  PageSlugs.Residency,
-  PageSlugs.TenantPhoto,
   PageSlugs.NextOfKin,
   PageSlugs.Carer,
   PageSlugs.OtherSupport,

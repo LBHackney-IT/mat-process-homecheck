@@ -8,11 +8,9 @@ import { TenancySummary } from "../../../components/TenancySummary";
 import getProcessRef from "../../../helpers/getProcessRef";
 import useDataValue from "../../../helpers/useDataValue";
 import useValidateData from "../../../helpers/useValidateData";
-import { tenantNotPresent } from "../../../helpers/yesNoNotPresentRadio";
 import MainLayout from "../../../layouts/MainLayout";
 import PageSlugs, { urlObjectForSlug } from "../../../steps/PageSlugs";
 import PageTitles from "../../../steps/PageTitles";
-import ExternalDatabaseSchema from "../../../storage/ExternalDatabaseSchema";
 import ProcessDatabaseSchema, {
   ProcessRef,
 } from "../../../storage/ProcessDatabaseSchema";
@@ -25,21 +23,8 @@ interface Status {
 }
 
 const useIdAndResidencyStatus = (
-  processRef: ProcessRef | undefined,
-  residentData:
-    | StoreValue<ExternalDatabaseSchema["schema"], "residents">
-    | undefined
+  processRef: ProcessRef | undefined
 ): Status => {
-  const tenantsPresent = useDataValue(
-    Storage.ProcessContext,
-    "tenantsPresent",
-    processRef,
-    (values) => (processRef !== undefined ? values[processRef] : undefined)
-  );
-
-  const allTenantIds = residentData?.tenants.map((tenant) => tenant.id);
-  const presentTenantIds = tenantsPresent.result;
-
   const started = useValidateData(
     Storage.ProcessContext,
     ["tenantsPresent"],
@@ -52,58 +37,40 @@ const useIdAndResidencyStatus = (
       }
 
       const tenantsPresent = tenantsPresentSet[processRef];
-
       const completedFirstStep = tenantsPresent !== undefined;
 
       return completedFirstStep;
     }
   );
 
-  const idCompleted = useValidateData(
-    Storage.ResidentContext,
-    ["id"],
-    presentTenantIds,
-    (valueSets) => {
-      const idSet = valueSets.id;
-
-      if (idSet === undefined) {
-        return false;
-      }
-
-      const allCompletedRequiredStep =
-        Object.values(idSet).length === presentTenantIds?.length &&
-        Object.values(idSet).every(
-          (id) => id?.type && id.type !== tenantNotPresent.value
-        );
-
-      return allCompletedRequiredStep;
-    }
+  const tenantsPresent = useDataValue(
+    Storage.ProcessContext,
+    "tenantsPresent",
+    processRef,
+    (values) => (processRef !== undefined ? values[processRef] : undefined)
   );
 
-  const residencyCompleted = useValidateData(
-    Storage.ResidentContext,
-    ["residency"],
-    allTenantIds,
+  const isCompleted = useValidateData(
+    Storage.ProcessContext,
+    ["tenantsPresent"],
+    processRef,
     (valueSets) => {
-      const residencySet = valueSets.residency;
+      const tenantsPresentSet = valueSets.tenantsPresent;
 
-      if (residencySet === undefined) {
+      if (tenantsPresentSet === undefined || processRef === undefined) {
         return false;
       }
 
-      const allCompletedRequiredStep =
-        Object.values(residencySet).length === allTenantIds?.length &&
-        Object.values(residencySet).every((residency) => residency?.type);
+      const tenantsPresent = tenantsPresentSet[processRef];
+      const completedFirstStep =
+        tenantsPresent !== undefined && !!tenantsPresent.length;
 
-      return allCompletedRequiredStep;
+      return completedFirstStep;
     }
   );
 
   const loading =
-    tenantsPresent.loading ||
-    started.loading ||
-    idCompleted.loading ||
-    residencyCompleted.loading;
+    tenantsPresent.loading || started.loading || isCompleted.loading;
 
   const errors = [];
 
@@ -115,12 +82,8 @@ const useIdAndResidencyStatus = (
     errors.push(started.error);
   }
 
-  if (idCompleted.error) {
-    errors.push(idCompleted.error);
-  }
-
-  if (residencyCompleted.error) {
-    errors.push(residencyCompleted.error);
+  if (isCompleted.error) {
+    errors.push(isCompleted.error);
   }
 
   // Note that we don't check the last step like we do for other sections, as
@@ -131,7 +94,7 @@ const useIdAndResidencyStatus = (
     status: loading
       ? undefined
       : started.result
-      ? idCompleted.result && residencyCompleted.result
+      ? isCompleted.result
         ? TaskListStatus.Completed
         : TaskListStatus.Started
       : TaskListStatus.NotStarted,
@@ -356,10 +319,7 @@ export const SectionsPage: NextPage = () => {
     (values) => (processRef ? values[processRef] : undefined)
   );
 
-  const idAndResidencyStatus = useIdAndResidencyStatus(
-    processRef,
-    residentData.result
-  );
+  const tenantInfoStatus = useIdAndResidencyStatus(processRef);
   const householdStatus = useHouseholdStatus(processRef);
   const propertyInspectionStatus = usePropertyInspectionStatus(processRef);
   const wellbeingSupportStatus = useWellbeingSupportStatus(processRef);
@@ -391,12 +351,12 @@ export const SectionsPage: NextPage = () => {
         }}
       />
 
-      {idAndResidencyStatus.loading ? (
+      {tenantInfoStatus.loading ? (
         <Paragraph>Checking process status...</Paragraph>
       ) : (
         <>
           <Paragraph>
-            {idAndResidencyStatus.status === TaskListStatus.Completed
+            {tenantInfoStatus.status === TaskListStatus.Completed
               ? "Please complete the remaining sections."
               : "To begin the check, verify the tenant's ID and proof of residency."}
           </Paragraph>
@@ -404,15 +364,15 @@ export const SectionsPage: NextPage = () => {
           <TaskList
             items={[
               {
-                name: "ID, residency, and tenant information",
+                name: "Tenant information",
                 url: urlObjectForSlug(router, PageSlugs.PresentForCheck),
-                status: idAndResidencyStatus.status,
+                status: tenantInfoStatus.status,
               },
               {
                 name: "Household",
                 url: urlObjectForSlug(router, PageSlugs.Household),
                 status:
-                  idAndResidencyStatus.status === TaskListStatus.Completed
+                  tenantInfoStatus.status === TaskListStatus.Completed
                     ? householdStatus.status
                     : TaskListStatus.Unavailable,
               },
@@ -420,7 +380,7 @@ export const SectionsPage: NextPage = () => {
                 name: "Property inspection",
                 url: urlObjectForSlug(router, PageSlugs.Rooms),
                 status:
-                  idAndResidencyStatus.status === TaskListStatus.Completed
+                  tenantInfoStatus.status === TaskListStatus.Completed
                     ? propertyInspectionStatus.status
                     : TaskListStatus.Unavailable,
               },
@@ -428,7 +388,7 @@ export const SectionsPage: NextPage = () => {
                 name: "Wellbeing support",
                 url: urlObjectForSlug(router, PageSlugs.Health),
                 status:
-                  idAndResidencyStatus.status === TaskListStatus.Completed
+                  tenantInfoStatus.status === TaskListStatus.Completed
                     ? wellbeingSupportStatus.status
                     : TaskListStatus.Unavailable,
               },
@@ -436,7 +396,7 @@ export const SectionsPage: NextPage = () => {
                 name: "Review and submit",
                 url: urlObjectForSlug(router, PageSlugs.Review),
                 status:
-                  idAndResidencyStatus.status === TaskListStatus.Completed
+                  tenantInfoStatus.status === TaskListStatus.Completed
                     ? TaskListStatus.NotStarted
                     : TaskListStatus.Unavailable,
               },
