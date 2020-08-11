@@ -54,7 +54,6 @@ export const VerifyPage: NextPage = () => {
     "nextOfKin",
     tenantIds
   );
-  console.log("VerifyPage:NextPage -> nextOfKinData", nextOfKinData);
 
   const tenantData = tenants.map((tenant) => ({
     id: tenant.id,
@@ -65,10 +64,6 @@ export const VerifyPage: NextPage = () => {
         ? true
         : false,
   }));
-
-  const allCompleted =
-    !residentData.loading &&
-    tenantData.every((tenant) => tenant.status !== false);
 
   const tableRows = tenantData.map((tenant) => {
     return [
