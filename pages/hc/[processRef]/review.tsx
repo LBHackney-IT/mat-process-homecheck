@@ -10,7 +10,6 @@ import { HouseholdReviewSection } from "../../../components/review-sections/Hous
 import { IdAndResidencyReviewSection } from "../../../components/review-sections/IdAndResidencyReviewSection";
 import { PropertyInspectionReviewSection } from "../../../components/review-sections/PropertyInspectionReviewSection";
 import { WellbeingSupportReviewSection } from "../../../components/review-sections/WellbeingSupportReviewSection";
-import Signature from "../../../components/Signature";
 import { TenancySummary } from "../../../components/TenancySummary";
 import Thumbnail from "../../../components/Thumbnail";
 import getProcessRef from "../../../helpers/getProcessRef";
@@ -19,7 +18,6 @@ import useDataValue from "../../../helpers/useDataValue";
 import MainLayout from "../../../layouts/MainLayout";
 import PageSlugs from "../../../steps/PageSlugs";
 import PageTitles from "../../../steps/PageTitles";
-import { ResidentRef } from "../../../storage/ResidentDatabaseSchema";
 import Storage from "../../../storage/Storage";
 
 const ReviewPage: NextPage = () => {
@@ -77,9 +75,6 @@ const ReviewPage: NextPage = () => {
   // We intentionally ignore whatever's in the database. We need the tenant to
   // sign against any changes, and this is the simplest way to ensure that
   // happens.
-  const [signatures, setSignatures] = useState<
-    { [Ref in ResidentRef]?: string }
-  >({});
 
   const [otherNotes, setOtherNotes] = useState([
     {
@@ -168,16 +163,6 @@ const ReviewPage: NextPage = () => {
       {tenantsPresent.map(({ fullName, id }) => (
         <React.Fragment key={id}>
           <Heading level={HeadingLevels.H3}>{fullName}</Heading>
-          <Signature
-            value={id && signatures[id]}
-            onChange={(value): void => {
-              if (!id) {
-                return;
-              }
-
-              setSignatures((sigs) => ({ ...sigs, [id]: value }));
-            }}
-          />
         </React.Fragment>
       ))}
       <SubmitButton
@@ -191,14 +176,6 @@ const ReviewPage: NextPage = () => {
             !processDatabase.result
           ) {
             return false;
-          }
-
-          for (const tenantId of presentTenantIds) {
-            await residentDatabase.result.put(
-              "signature",
-              tenantId,
-              signatures[tenantId] || ""
-            );
           }
 
           await processDatabase.result.transaction(
