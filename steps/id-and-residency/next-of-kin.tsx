@@ -69,11 +69,6 @@ const step: ProcessStepDefinition<ResidentDatabaseSchema, "nextOfKin"> = {
       },
     ],
   },
-  errors: {
-    required: {
-      "next-of-kin-full-name": "Please enter a full name", // FIXME: use this to show error message if a next of kin is not entered. This value is being used to determine if the status of this tenant is complete or not
-    },
-  },
   step: {
     slug: PageSlugs.NextOfKin,
     nextSlug: slugForRepeatingStep(PageSlugs.Carer),

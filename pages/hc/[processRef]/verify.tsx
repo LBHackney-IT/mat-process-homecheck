@@ -74,7 +74,6 @@ export const VerifyPage: NextPage = () => {
     return [
       tenant.name,
       formatDate(tenant.dateOfBirth, "d MMMM yyyy"),
-      tenant.status ? "Completed" : "Not completed",
       <Link
         key="edit-link"
         href={
@@ -137,18 +136,17 @@ export const VerifyPage: NextPage = () => {
       <Heading level={HeadingLevels.H2}>Select a tenant to check</Heading>
 
       <Table
-        headings={["Tenant", "Date of birth", "Status", "Action"]}
+        headings={["Tenant", "Date of birth", "Action"]}
         rows={tableRows}
       />
 
-      {allCompleted &&
-        (href.pathname && as.pathname ? (
-          <NextLink href={href} as={as}>
-            {button}
-          </NextLink>
-        ) : (
-          button
-        ))}
+      {href.pathname && as.pathname ? (
+        <NextLink href={href} as={as}>
+          {button}
+        </NextLink>
+      ) : (
+        button
+      )}
     </MainLayout>
   );
 };

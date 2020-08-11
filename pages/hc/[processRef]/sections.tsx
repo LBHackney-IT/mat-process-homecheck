@@ -25,15 +25,6 @@ interface Status {
 const useIdAndResidencyStatus = (
   processRef: ProcessRef | undefined
 ): Status => {
-  const tenantsPresent = useDataValue(
-    Storage.ProcessContext,
-    "tenantsPresent",
-    processRef,
-    (values) => (processRef !== undefined ? values[processRef] : undefined)
-  );
-
-  const presentTenantIds = tenantsPresent.result;
-
   const started = useValidateData(
     Storage.ProcessContext,
     ["tenantsPresent"],
@@ -46,31 +37,35 @@ const useIdAndResidencyStatus = (
       }
 
       const tenantsPresent = tenantsPresentSet[processRef];
-
       const completedFirstStep = tenantsPresent !== undefined;
 
       return completedFirstStep;
     }
   );
 
-  const isCompleted = useValidateData(
-    Storage.ResidentContext,
-    ["nextOfKin"],
-    presentTenantIds,
-    (valueSets) => {
-      const nextOfKinSet = valueSets.nextOfKin;
+  const tenantsPresent = useDataValue(
+    Storage.ProcessContext,
+    "tenantsPresent",
+    processRef,
+    (values) => (processRef !== undefined ? values[processRef] : undefined)
+  );
 
-      if (nextOfKinSet === undefined) {
+  const isCompleted = useValidateData(
+    Storage.ProcessContext,
+    ["tenantsPresent"],
+    processRef,
+    (valueSets) => {
+      const tenantsPresentSet = valueSets.tenantsPresent;
+
+      if (tenantsPresentSet === undefined || processRef === undefined) {
         return false;
       }
 
-      const allCompletedRequiredStep =
-        Object.values(nextOfKinSet).length === presentTenantIds?.length &&
-        Object.values(nextOfKinSet).every(
-          (nextOfKinSet) => nextOfKinSet?.fullName
-        );
+      const tenantsPresent = tenantsPresentSet[processRef];
+      const completedFirstStep =
+        tenantsPresent !== undefined && !!tenantsPresent.length;
 
-      return allCompletedRequiredStep;
+      return completedFirstStep;
     }
   );
 

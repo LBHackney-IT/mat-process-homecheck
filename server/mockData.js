@@ -15,10 +15,7 @@ const mockProcessData = {
       submitted: "2020-07-28T15:57:36.952Z",
       property: { outside: { images: [] }, metalGates: { images: [] } },
       isVisitInside: { value: "yes" },
-      tenantsPresent: [
-        "aca34650-7857-e811-8126-70106faa6a31",
-        "b2a34650-7857-e811-8126-70106faa6a31",
-      ],
+      tenantsPresent: [],
       household: {
         documents: { images: [] },
         memberChanges: {
@@ -73,26 +70,7 @@ const mockProcessData = {
         },
         otherNotes: "",
       },
-      residents: {
-        "aca34650-7857-e811-8126-70106faa6a31": {
-          id: { type: "valid passport", images: [], notes: [] },
-          residency: { type: "payslip", images: [], notes: [] },
-          photo: { isWilling: "yes", images: [] },
-          nextOfKin: { fullName: "hdkal" },
-          carer: { hasCarer: "no" },
-          otherSupport: { fullName: "jkl" },
-          signature: "",
-        },
-        "b2a34650-7857-e811-8126-70106faa6a31": {
-          id: { type: "valid passport", images: [], notes: [] },
-          residency: { type: "residence permit", images: [], notes: [] },
-          photo: { isWilling: "yes", images: [] },
-          nextOfKin: { fullName: "njkl" },
-          carer: { hasCarer: "no" },
-          otherSupport: { fullName: "mzsl", role: "." },
-          signature: "",
-        },
-      },
+      residents: {},
     },
     postProcessData: {},
   },
