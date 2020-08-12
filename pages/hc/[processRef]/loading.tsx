@@ -10,6 +10,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { nullAsUndefined } from "null-as-undefined";
 import React, { useMemo, useState } from "react";
+import { Fragment } from "react";
 import { useAsync } from "react-async-hook";
 import ProgressBar from "../../../components/ProgressBar";
 import { TenancySummary } from "../../../components/TenancySummary";
@@ -525,13 +526,16 @@ export const LoadingPage: NextPage = () => {
           worktray.
         </ErrorMessage>
       )}
-
-      <Heading level={HeadingLevels.H2}>Loading</Heading>
-      <Paragraph>
-        {isInManagerStage || isInClosedStage
-          ? "The system is fetching the information you need for this process."
-          : "The system is updating the information you need for this process so that you can go offline at any point."}
-      </Paragraph>
+      {loading && (
+        <Fragment>
+          <Heading level={HeadingLevels.H2}>Loading</Heading>
+          <Paragraph>
+            {isInManagerStage || isInClosedStage
+              ? "The system is fetching the information you need for this process."
+              : "The system is updating the information you need for this process so that you can go offline at any point."}
+          </Paragraph>
+        </Fragment>
+      )}
 
       <ProgressBar
         progress={progress}

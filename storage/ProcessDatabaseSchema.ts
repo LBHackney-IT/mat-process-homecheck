@@ -215,21 +215,22 @@ type ProcessDatabaseSchema = NamedSchema<
       value: {
         notes: Notes;
       };
-    };
 
-    managerComment: {
-      key: ProcessRef;
-      value: string;
+      managerComments: {
+        key: ProcessRef;
+        value: {
+          closedReview: string;
+          managerReview: string;
+        };
+      };
+
+      managerComment: {
+        key: ProcessRef;
+        value: string;
+      };
     };
   }
 >;
-
-export enum UnableToEnterPropertyNames {
-  First = "firstFailedAttempt",
-  Second = "secondFailedAttempt",
-  Third = "thirdFailedAttempt",
-  Fourth = "fourthFailedAttempt",
-}
 
 export interface ProcessJson {
   dateCreated: string;
@@ -262,6 +263,9 @@ const storeNames: {
   disability: true,
   supportNeeds: true,
   other: true,
+  managerComments: true,
+
+  // DEPRECATED. DO NOT REMOVE
   managerComment: true,
 };
 
@@ -322,6 +326,7 @@ export const processNotesPaths: {
     "mentalHealthOver65Notes",
   ],
   other: ["notes"],
+  managerComments: ["closedReview", "managerReview"],
   managerComment: [],
 };
 
@@ -487,6 +492,16 @@ export const processPostVisitActionMap: {
     notes: {
       category: "24",
       subcategory: "100000209",
+    },
+  },
+  managerComments: {
+    closedReview: {
+      category: "30",
+      subcategory: "XXXXXXX",
+    },
+    managerReview: {
+      category: "30",
+      subcategory: "XXXXXXX",
     },
   },
   managerComment: {},

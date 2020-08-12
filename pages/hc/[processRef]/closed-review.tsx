@@ -46,19 +46,19 @@ const ReviewPage: NextPage = () => {
   const processDatabase = useDatabase(Storage.ProcessContext);
   const isInManagerStage = isManager(router);
 
-  const managerComment = useDataValue(
+  const managerComments = useDataValue(
     Storage.ProcessContext,
-    "managerComment",
+    "managerComments",
     processRef,
     (values) => (processRef ? values[processRef] : undefined)
   );
 
-  const [managerCommentState, setManagerCommentState] = useState("");
+  const [managerComment, setManagerComment] = useState<string>("");
   useEffect(() => {
-    if (managerComment.result !== undefined) {
-      setManagerCommentState(managerComment.result);
+    if (managerComments.result !== undefined) {
+      setManagerCommentsState(managerComments.result.closedReview);
     }
-  }, [managerComment.result]);
+  }, [managerComments.result]);
 
   const tenants = useDataValue(
     Storage.ExternalContext,
@@ -265,9 +265,9 @@ const ReviewPage: NextPage = () => {
               <Heading level={HeadingLevels.H2}>Manager&apos;s comment</Heading>
             ),
           }}
-          value={managerCommentState}
+          value={managerComment}
           rows={4}
-          onChange={(value): void => setManagerCommentState(value)}
+          onChange={(value): void => setManagerComment(value)}
         />
       )}
       <SubmitButton
@@ -277,11 +277,23 @@ const ReviewPage: NextPage = () => {
           }
 
           if (isInManagerStage) {
-            // FIXME: This will overwrite the existing "managerComment" if there is one
+            const comments = Object.assign(
+              {
+                closedReview: "",
+                managerReview: "",
+                unableToEnterClosedReview: "",
+                unableToEnterManagerReview: "",
+              },
+              managerComments.result,
+              {
+                closedReview: managerComment,
+              }
+            );
+            // FIXME: This will overwrite the existing "managerComments" if there is one
             await processDatabase.result.put(
-              "managerComment",
+              "managerComments",
               processRef,
-              managerCommentState
+              comments
             );
           }
           await processDatabase.result.put(
