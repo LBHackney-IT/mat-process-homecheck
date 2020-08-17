@@ -8,10 +8,14 @@ const upgradeSchema = (
   upgrade.createStore("property");
   upgrade.createStore("isUnannouncedVisit");
   upgrade.createStore("isVisitInside");
-  // upgrade.createStore("homeCheck");
   upgrade.createStore("healthConcerns");
   upgrade.createStore("disability");
   upgrade.createStore("supportNeeds");
+  upgrade.createStore("household");
+  upgrade.createStore("tenantsPresent");
+  upgrade.createStore("submitted");
+  upgrade.createStore("managerComments");
+  upgrade.createStore("other");
 };
 
 export default upgradeSchema;

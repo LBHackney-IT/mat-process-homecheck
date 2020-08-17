@@ -152,11 +152,9 @@ const ProcessPage: NextPage = () => {
     </>
   );
 
-  const pausable = ![
-    PageSlugs.Outside,
-    PageSlugs.Start,
-    PageSlugs.AboutVisit,
-  ].includes(currentStep.step.slug as PageSlugs);
+  const pausable = ![PageSlugs.Outside, PageSlugs.Start].includes(
+    currentStep.step.slug as PageSlugs
+  );
 
   let page: React.ReactElement;
 
