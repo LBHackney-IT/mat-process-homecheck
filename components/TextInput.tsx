@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   DynamicComponentControlledProps,
   DynamicComponent,
@@ -19,17 +19,27 @@ export const TextInput: React.FunctionComponent<TextInputProps> = (props) => {
   const inputId = `${name}-input`;
 
   return (
-    <Input
-      id={inputId}
-      name={name}
-      label={{ id: labelId, children: label }}
-      type={InputType.Text}
-      value={value}
-      required={required}
-      disabled={disabled}
-      onChange={onValueChange}
-      aria-labelledby={labelId}
-    />
+    <Fragment>
+      <style jsx>{`
+        :global(.lbh-form-group.postTextInput) {
+          margin: 20px 0;
+        }
+      `}</style>
+      <Input
+        id={inputId}
+        name={name}
+        label={{ id: labelId, children: label }}
+        type={InputType.Text}
+        value={value}
+        required={required}
+        disabled={disabled}
+        onChange={onValueChange}
+        aria-labelledby={labelId}
+        formGroup={{
+          className: "postTextInput",
+        }}
+      />
+    </Fragment>
   );
 };
 

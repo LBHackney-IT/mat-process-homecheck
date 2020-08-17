@@ -34,6 +34,7 @@ export const Table: React.FunctionComponent<Props> = (props) => {
           width: 100%;
           text-align: left;
           font-family: "Montserrat";
+          border-spacing: 5px;
         }
       `}</style>
     </table>

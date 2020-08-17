@@ -19,7 +19,7 @@ const step = {
   heading: "Start Home Check",
   step: {
     slug: PageSlugs.Start,
-    nextSlug: PageSlugs.AboutVisit,
+    nextSlug: PageSlugs.Sections,
     submit: (nextSlug?: string): ReturnType<typeof makeSubmit> =>
       makeSubmit({
         slug: nextSlug as PageSlugs | undefined,
