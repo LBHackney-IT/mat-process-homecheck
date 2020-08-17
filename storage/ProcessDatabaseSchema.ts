@@ -217,9 +217,11 @@ type ProcessDatabaseSchema = NamedSchema<
       };
     };
 
-    managerComment: {
+    managerComments: {
       key: ProcessRef;
-      value: string;
+      value: {
+        managerReview: string;
+      };
     };
   }
 >;
@@ -262,7 +264,7 @@ const storeNames: {
   disability: true,
   supportNeeds: true,
   other: true,
-  managerComment: true,
+  managerComments: true,
 };
 
 export const processStoreNames = Object.entries(storeNames)
@@ -322,7 +324,7 @@ export const processNotesPaths: {
     "mentalHealthOver65Notes",
   ],
   other: ["notes"],
-  managerComment: [],
+  managerComments: [],
 };
 
 export const processPostVisitActionMap: {
@@ -489,7 +491,12 @@ export const processPostVisitActionMap: {
       subcategory: "100000209",
     },
   },
-  managerComment: {},
+  managerComments: {
+    managerReview: {
+      category: "30",
+      subcategory: "XXXXXXX",
+    },
+  },
 };
 
 export default ProcessDatabaseSchema;
