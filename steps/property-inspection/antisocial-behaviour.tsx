@@ -4,6 +4,8 @@ import {
   ListProps,
   ListTypes,
   Paragraph,
+  Heading,
+  HeadingLevels,
 } from "lbh-frontend-react/components";
 import React from "react";
 import {
@@ -110,7 +112,11 @@ const step: ProcessStepDefinition<ProcessDatabaseSchema, "property"> = {
           props: {
             name: "tenant-understands",
             legend: (
-              <FieldsetLegend>{questions["tenant-understands"]}</FieldsetLegend>
+              <FieldsetLegend>
+                <Heading level={HeadingLevels.H3}>
+                  {questions["tenant-understands"]}
+                </Heading>
+              </FieldsetLegend>
             ) as React.ReactNode,
             radios: yesNoRadios,
           },
