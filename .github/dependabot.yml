@@ -1,0 +1,43 @@
+version: 2
+updates:
+- package-ecosystem: docker
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  allow:
+  - dependency-type: all
+  ignore:
+  - dependency-name: node
+    versions:
+    - ">= 13.a"
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  versioning-strategy: increase
+  allow:
+  - dependency-type: all
+  ignore:
+  - dependency-name: y18n
+    versions:
+    - 4.0.1
+    - 4.0.2
+  - dependency-name: "@babel/plugin-transform-unicode-regex"
+    versions:
+    - 7.12.1
+  - dependency-name: idb
+    versions:
+    - 5.0.7
+  - dependency-name: "@babel/plugin-transform-template-literals"
+    versions:
+    - 7.12.1
+  - dependency-name: "@babel/plugin-transform-exponentiation-operator"
+    versions:
+    - 7.10.4
+  - dependency-name: lodash
+    versions:
+    - 4.17.20
